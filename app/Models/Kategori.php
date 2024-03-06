@@ -10,6 +10,7 @@ class Kategori extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['kategori'];
     //ngasih tahu silaravel table yang saya pake itu bukan kategoriies
     //tapi kategori
     protected $table = "kategori";

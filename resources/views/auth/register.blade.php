@@ -45,6 +45,12 @@
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
+                    <input id="username" name="username" type="text" class="form-control form-control-xl" :value="old('username')" required autofocus autocomplete="username" placeholder="Username">
+                    <div class="form-control-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left mb-4">
                     <input id="password" type="password" class="form-control form-control-xl" name="password"
                     required autocomplete="new-password" placeholder="Password">
                     <div class="form-control-icon">

@@ -32,13 +32,13 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input id="email" class="form-control form-control-xl" type="email" name="email" :value="old('email')" required autofocus autocomplete="username">
+                    <input id="email" class="form-control form-control-xl" type="text" name="usermail" :value="old('email')" required autofocus autocomplete="username" placeholder="Email or username">
                     <div class="form-control-icon">
                         <i class="bi bi-person"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input id="password" class="form-control form-control-xl" type="password" name="password" required autocomplete="current-password">
+                    <input id="password" class="form-control form-control-xl" type="password" name="password" required autocomplete="current-password" placeholder="Password">
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>
@@ -54,7 +54,13 @@
             <div class="text-center mt-5 text-lg fs-4">
                 <p class="text-gray-600">Don't have an account? <a href="" class="font-bold">Sign
                         up</a>.</p>
-                <p><a class="font-bold" href="{{ route('password.request') }}"> {{ __('Forgot your password?') }} </a>.</p>
+                
+                @if (Route::has('password.request'))
+                <p>
+                    <a class="font-bold" href="{{ route('password.request') }}"> {{ __('Forgot your password?') }} </a>.
+                </p>
+                @endif
+                
             </div>
         </div>
     </div>
