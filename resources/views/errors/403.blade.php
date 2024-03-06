@@ -1,0 +1,1 @@
+{{ "Anda nggak bisa lewat sini, ini jalan buntu"}}

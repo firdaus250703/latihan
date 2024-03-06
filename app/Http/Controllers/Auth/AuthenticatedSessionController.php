@@ -23,13 +23,31 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
+
+     //INI FUNGSI YANG DIPAKE BUAT REDIRECT LOGIN
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        //ini jangan langsung diredirect
+        //harus lewat validasi dulu
+
+        // return redirect()->intended(RouteServiceProvider::HOME);
+
+        //kalau role user nya lebih dari 2
+        if (auth()->user()->role == 'admin') {
+            return redirect()->route('admin');
+        }elseif (auth()->user()->role == 'user') {
+            return redirect()->route('user');   
+        }
+
+        //tapi kalau role nya itu hanya ada 2 pake ini saja [percabangan ternary]
+        return redirect()->intended(
+            auth()->user()->role == 'admin' ? route('admin') : route('user')
+        );
+
     }
 
     /**

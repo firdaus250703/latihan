@@ -92,10 +92,12 @@
 
                                 </li>
 
-                                <li class="submenu-item  ">
-                                    <a href="{{route ('buku.index')}}" class="submenu-link">Manage Book</a>
-
-                                </li>
+                                @if (Auth::user()->role == 'admin')
+                                     <li class="submenu-item">
+                                         <a href="{{ route('buku.index') }}" class="submenu-link">Manage Book</a>
+                                     </li>
+                                @endif
+                        
                             </ul>
                         </li>
                     </ul>
@@ -112,7 +114,7 @@
                 <a href="#" id="topbarUserDropdown" class="user-dropdown d-flex align-items-center dropend dropdown-toggle float-end" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="text me-3">
                         <h6 class="user-dropdown-name text-secondary">{{ Auth::user()->name }}</h6>
-                        <p class="user-dropdown-status text-sm text-muted">Administrator</p>
+                        <p class="user-dropdown-status text-sm text-muted">{{ Auth::user()->email }}</p>
                     </div>
                     <div class="avatar avatar-md2" >
                         <img src="{{ asset('dist') }}/assets/compiled/jpg/1.jpg" alt="Avatar">

@@ -11,9 +11,25 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+    // buat dulu variable yang bisa dinamis isinya
+    protected $userid;
+
+    // ini buat ngasih opsi inputan login boleh pakek username atau email
+    protected function prepareForValidation(): void
+{
+    // iff alau inputin gmail
+    // else kalau inputin username
+    if (filter_var($this->input('username'), FILTER_VALIDATE_EMAIL)) {
+        $this->userid = 'email';
+    }else {
+        $this->userid = 'username';
+    }
+
+    $this->merge([
+        $this->userid => $this->input('usermail'),
+    ]);
+}
+
     public function authorize(): bool
     {
         return true;
@@ -27,7 +43,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'usermail' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -40,8 +56,10 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+        // buat ngecek inputan sudah dinamis
+        // dd($this->input());
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (! Auth::attempt($this->only( $this->userid, 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

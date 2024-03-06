@@ -10,6 +10,8 @@ class Buku extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['buku'];
+
     protected $table = "buku";
 
     public function category()
